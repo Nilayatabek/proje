@@ -1,0 +1,115 @@
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    
+    def __str__(self):
+        return f"Person({self.name}, {self.age})"
+
+class Student(Person):
+    def __init__(self, name, age, school):
+        super().__init__(name, age)
+        self.school = school
+    
+    def introduce(self):
+        print(f"Merhaba, benim adım {self.name} ve {self.age} yaşındayım. {self.school} okulunda okuyorum.")
+    
+    def __str__(self):
+        return f"Student({self.name}, {self.age}, {self.school})"
+
+class Teacher(Person):
+    def __init__(self, name, age, subject):
+        super().__init__(name, age)
+        self.subject = subject
+    
+    def introduce(self):
+        print(f"Merhaba, benim adım {self.name} ve {self.age} yaşındayım. {self.subject} dersini veriyorum.")
+    
+    def __str__(self):
+        return f"Teacher({self.name}, {self.age}, {self.subject})"
+
+class Course:
+    def __init__(self, name, teacher, students):
+        self.name = name
+        self.teacher = teacher
+        self.students = students
+
+    def __add__(self, newstudents): #overloading
+
+        return self.students + newstudents.students
+
+    
+    def __contains__(self, student):
+        return student in self.students
+    
+    def __str__(self):
+        return f"Course({self.name}, {self.teacher}, {self.students})"
+
+class School:
+    def __init__(self, name, courses):
+        self.name = name
+        self.courses = courses
+    
+    def __contains__(self, course):
+        return course in self.courses
+    
+    def __str__(self):
+        return f"School({self.name}, {self.courses})"
+  
+    
+    
+kisi1 = Person("Aytuğ", 19)
+kisi2 = Person("Diyar", 22)
+kisi3 = Person("Nilay", 23)
+kisi4 = Person("Doğa", 18)
+kisi5 = Person("Semih", 24)
+hocakisi1 = Person("Ahmet Bey", 55)
+hocakisi2 = Person("Veli Bey", 40)    
+hocakisi3 = Person("Murat Bey", 62)
+
+ogrenci1 = Student("Aytuğ", 19, "Galatasaray Üniversitesi")
+ogrenci2 = Student("Diyar", 22, "Yıldız Teknik Üniversitesi")
+ogrenci3 = Student("Nilay", 23, "Galatasaray Üniversitesi")
+ogrenci4 = Student("Doğa", 18, "Galatasaray Üniversitesi")
+ogrenci5 = Student("Semih", 24, "Galatasaray Üniversitesi")
+newogrenci1= Student("Gamze",21, "Galatasaray Üniversitesi")
+ogretmen1 = Teacher("Ahmet Bey", 55, "Matematik")
+ogretmen2 = Teacher("Veli Bey", 40, "Fizik")
+ogretmen3 = Teacher("Murat Bey", 62, "Kimya")
+ders1 = Course("Matematik", ogretmen1, [ogrenci1.name,ogrenci2.name,ogrenci3.name,ogrenci4.name])
+ders2 = Course("İstatistik", ogretmen2, ["Diyar","Doğa","Nilay","Semih"])
+ders3 = Course("Fizik", ogretmen3, ["Diyar","Aytuğ","Nilay","Semih"])
+ders1_kontenjan= Course("Matematik", ogretmen1, [newogrenci1.name]) #ders1 için açılan kontenjana öğrenci ekledik, overloading için
+okul1 = School("Galatasaray Üniversitesi",["Matematik","İstatistik"])
+okul2 = School("Yıldız Teknk Üniversitesi",["Fizik","Matematik"])
+
+#ders1'e önceden yazılan ve sonradan yazılan öğrencileri topladık ve öğrenci listesine atadık, overloading sayesinde işlem tamamlandı 
+ders1_total_ogrenci_listesi= ders1 + ders1_kontenjan
+print (ders1_total_ogrenci_listesi)
+
+print(ogretmen2.introduce())
+print(ogrenci1.introduce())
+print(ogrenci2.name)#mirastan geliyor
+print(ogrenci3.age)
+print(kisi4.__str__())
+print(ogrenci5.__str__())
+print(ogretmen2.introduce())
+print(ogretmen1.subject)
+print(ders3.name)    
+print(ders2.students)    
+print(ders3.name)  
+print(ders2.teacher)
+print(ders2.teacher.name)
+print(ders2.teacher.age)
+print(okul1.courses)
+print(okul2.name)
+print(ders1.__contains__("Diyar")) 
+print(ders1.__contains__("Semih")) 
+print(ders1.students)
+print(okul2.__contains__("Matematik"))
+print(okul2.__contains__("İstatistik"))
+print(okul2.courses)
+print(okul2.__str__())
+print(hocakisi2.__str__())
+
